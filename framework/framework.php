@@ -178,6 +178,7 @@ class Controller {
 
 }
 
+
 class FrameworkError extends Exception {
   
   protected $details = null;
