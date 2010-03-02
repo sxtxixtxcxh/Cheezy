@@ -29,7 +29,7 @@ You'll need to add `<?php echo $content_for_layout; ?>` where ever you want the 
 ### Pages
 
 The default page the framework will try to render is `home.php` inside `_pages`. To add a new page to your site, 
-say something like `http://example.dev/bio/` just make a new file called `bio.php` and put it inside `_pages`.
+something like `http://example.dev/bio/` for example, just make a new file called `bio.php` and put it inside `_pages`.
 
 ### Partials
 
