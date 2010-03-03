@@ -20,7 +20,7 @@ class Framework {
     include APP_ROOT.'/framework/lib/preferences.php';
     self::$prefs = new PreferenceCollection( array(self::$tmp_path) );
     self::$prefs->read('cache', true, self::$tmp_path);
-
+    self::$cache = self::$prefs->cache;
     Timer::start();
   }
   
@@ -144,6 +144,10 @@ class Controller {
   }
   
   function process_exception( $object ){
+    echo '<pre style="clear:left;text-align:left">';
+    var_dump($object);
+    echo '</pre>';
+    die(__FILE__ .' <br /> #: '. __LINE__);
     
     $this->error = $object;
     $this->message = $object->getMessage();
@@ -209,7 +213,9 @@ function raise(){
   return call_user_func_array(array(Framework::$current_controller_object, 'raise'), $args);
 }
 
-function __autoload ($class_name) {
+spl_autoload_register('framework_autoload');
+
+function framework_autoload($class_name){
 
   // check cache if specified class has been found before
   if ( !empty(Framework::$cache->autoload[$class_name]) ) {
@@ -221,11 +227,11 @@ function __autoload ($class_name) {
       $save_cache = true;
     }
   }
-  
-  
+
   
   $autoload_paths  = array( APP_ROOT.'/lib/', 
                             APP_ROOT.'/framework/lib/',
+                            APP_ROOT.'/models/',
                           );
 
   $filename_styles = array( 'lower'=>strtolower($class_name),
@@ -237,14 +243,21 @@ function __autoload ($class_name) {
                             '.class.php',
                           );
 
-  foreach($autoload_paths as $path){
-    foreach($filename_styles as $file){
-      foreach($file_extensions as $extension){
-        if( is_file($path.$file.$extension) ){
-          Framework::$prefs->cache->autoload[$class_name] = $path.$file.$extension;
-          $save_cache = true;
-          include_once($path.$file.$extension);
-          break 3;
+  if( empty($found)){
+    foreach($autoload_paths as $path){
+      foreach($filename_styles as $file){
+        foreach($file_extensions as $extension){
+          echo '<pre style="clear:left;text-align:left">';
+          var_dump($path.$file.$extension);
+          echo '</pre>';
+
+
+          if( is_file($path.$file.$extension) ){
+            Framework::$prefs->cache->autoload[$class_name] = $path.$file.$extension;
+            $save_cache = true;
+            include_once($path.$file.$extension);
+            break 3;
+          }
         }
       }
     }
