@@ -1,3 +1,0 @@
-[submodule "lib/litemysql"]
-	path = lib/litemysql
-	url = git://github.com/jimeh/litemysql.git
