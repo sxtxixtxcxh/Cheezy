@@ -15,7 +15,7 @@ Think of it as [Zynapse][]'s little brother:
 Basic Usage
 -----------
 
-Easiest thing to do is to take this example project, and start making changes.
+Easiest thing to do is to take [the sample project](http://github.com/sxtxixtxcxh/Cheezy-Sample-Site), and start making changes.
 
 ### Layouts
 
@@ -40,7 +40,7 @@ or layout, add `<?php render_partial('header'); ?>` wherever you want it to be i
 
 You can customize the error pages by making a new php file called `default.php` in `_errors`. Alternatively, you
 can serve a specialized page per HTTP error code by putting a file named after the error code number into `_errors`
-(for example: `404.php`). Check out the `framework/_errors/default.php` to see the variables you can use in
+(for example: `404.php`). Check out the `vendor/cheezy/_errors/default.php` to see the variables you can use in
 your error pages.
 
 
