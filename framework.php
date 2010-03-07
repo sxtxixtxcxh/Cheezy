@@ -158,16 +158,16 @@ class Controller {
     }
     
     $paths = array(
-      '_errors',
-      'framework/_errors',
+      APP_ROOT.'/_errors',
+      FRAMEWORK_ROOT.'/_errors',
     );
     
     foreach( $paths as $path ) {
-      if ( is_file(APP_ROOT.'/'.$path.'/'.$this->code.'.'.Framework::$views_extension) ) {
-        $view_file = APP_ROOT.'/'.$path.'/'.$this->code.'.'.Framework::$views_extension;
+      if ( is_file($path.'/'.$this->code.'.'.Framework::$views_extension) ) {
+        $view_file = $path.'/'.$this->code.'.'.Framework::$views_extension;
         break;
-      } elseif ( is_file(APP_ROOT.'/'.$path.'/default.'.Framework::$views_extension) ) {
-        $view_file = APP_ROOT.'/'.$path.'/default.'.Framework::$views_extension;
+      } elseif ( is_file($path.'/default.'.Framework::$views_extension) ) {
+        $view_file = $path.'/default.'.Framework::$views_extension;
         break;
       }
     }
