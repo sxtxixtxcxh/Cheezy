@@ -12,12 +12,14 @@ class Framework {
     
   function boot(){
     if ( !defined('APP_ROOT') ) {
-      define('APP_ROOT', dirname(dirname(__FILE__)));
+      define('FRAMEWORK_ROOT', dirname(__FILE__));
+      define('APP_ROOT', dirname(dirname(FRAMEWORK_ROOT)));
     }
+    
     self::$tmp_path = APP_ROOT.'/tmp';
 
     // initialize preference system
-    include APP_ROOT.'/framework/lib/preferences.php';
+    include FRAMEWORK_ROOT.'/lib/preferences.php';
     self::$prefs = new PreferenceCollection( array(self::$tmp_path) );
     self::$prefs->read('cache', true, self::$tmp_path);
     self::$cache = self::$prefs->cache;
@@ -144,10 +146,6 @@ class Controller {
   }
   
   function process_exception( $object ){
-    echo '<pre style="clear:left;text-align:left">';
-    var_dump($object);
-    echo '</pre>';
-    die(__FILE__ .' <br /> #: '. __LINE__);
     
     $this->error = $object;
     $this->message = $object->getMessage();
@@ -230,7 +228,7 @@ function framework_autoload($class_name){
 
   
   $autoload_paths  = array( APP_ROOT.'/lib/', 
-                            APP_ROOT.'/framework/lib/',
+                            FRAMEWORK_ROOT.'/lib/',
                             APP_ROOT.'/models/',
                           );
 
@@ -247,11 +245,6 @@ function framework_autoload($class_name){
     foreach($autoload_paths as $path){
       foreach($filename_styles as $file){
         foreach($file_extensions as $extension){
-          echo '<pre style="clear:left;text-align:left">';
-          var_dump($path.$file.$extension);
-          echo '</pre>';
-
-
           if( is_file($path.$file.$extension) ){
             Framework::$prefs->cache->autoload[$class_name] = $path.$file.$extension;
             $save_cache = true;
