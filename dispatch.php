@@ -6,7 +6,7 @@ class Dispatcher {
 		try {
 			session_start();
 			Framework::boot();
-			Framework::$controller = new Controller;
+			Framework::$controller = new ApplicationController;
       Framework::$controller->process_route();
       
 		} catch (Exception $e) {
