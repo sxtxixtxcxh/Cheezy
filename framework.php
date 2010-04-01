@@ -32,6 +32,7 @@ class Framework {
 class Controller {
   private $content_for_layout = null;
   public $view_file;
+  public $page;
   public $layout = '';
   
   function render_partial($file, $locals = array()){
@@ -121,9 +122,10 @@ class Controller {
 
     // should use a router, but this works for now.
     // do a little sanitation
-    $view = str_replace('..', '', trim($_SERVER['REQUEST_URI'],'/'));
-    if($view == '') $view = 'home';
-    $this->view_file = APP_ROOT.'/_pages/'.$view.'.'.Framework::$views_extension;
+    $this->page = str_replace('..', '', trim($_SERVER['REQUEST_URI'],'/'));
+    if($this->page == '') $this->page = 'home';
+    
+    $this->view_file = $this->views_path.'/'.$this->page.'.'.Framework::$views_extension;
 
   }
   
