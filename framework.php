@@ -366,4 +366,18 @@ function framework_autoload($class_name){
   
 }
 
+function getDirectoryTree( $outerDir , $x){ 
+    $dirs = array_diff( scandir( $outerDir ), Array( ".", "..",".svn" ) ); 
+    $dir_array = Array(); 
+    foreach( $dirs as $d ){ 
+        if( is_dir($outerDir."/".$d)  ){ 
+            $dir_array[ $d ] = getDirectoryTree( $outerDir."/".$d , $x); 
+        }else{ 
+         if (($x)?preg_match('/'.$x.'$/',$d):1) 
+            $dir_array[ $d ] = $d; 
+            } 
+    } 
+    return $dir_array; 
+}
+
 ?>

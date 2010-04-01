@@ -10,8 +10,8 @@ class AdminController extends Controller {
 	}
 	
 	function pages()
-	{
-    $this->title = 'test';
+	{	  
+    $this->pages = getDirectoryTree(APP_ROOT.'/_pages');
 	}
 }
 ?>
