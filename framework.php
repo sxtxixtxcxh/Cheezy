@@ -60,6 +60,7 @@ class Controller {
 	private $after_filters = array();
 	
   public $view_file;
+  public $page;
   public $layout = '';
 	public $controller_class;
   public $controller_object;
@@ -165,22 +166,22 @@ class Controller {
 
     // should use a router, but this works for now.
     // do a little sanitation
-    $view = str_replace('..', '', trim($_SERVER['REQUEST_URI'],'/'));
+    $this->page = str_replace('..', '', trim($_SERVER['REQUEST_URI'],'/'));
     
 		$this->layouts_path = $this->layouts_base_path = Framework::$layouts_path;
 		$this->views_path = Framework::$views_path;
 		$this->partials_path = Framework::$partials_path;
     
-    if(preg_match('/^admin/', $view)){
+    if(preg_match('/^admin/', $this->page)){
       $this->controller_class = 'AdminController';
   		$this->layouts_path = FRAMEWORK_ROOT.'/_layouts';
   		$this->views_path = FRAMEWORK_ROOT.'/_pages';
   		$this->partials_path = FRAMEWORK_ROOT.'/_partials';
-      $view = $this->action = trim($view,'admin /');
+      $this->page = $this->action = trim($this->page,'admin /');
     }
-    if($view == '') $view = 'home';
+    if($this->page == '') $this->page = 'home';
     
-    $this->view_file = $this->views_path.'/'.$view.'.'.Framework::$views_extension;
+    $this->view_file = $this->views_path.'/'.$this->page.'.'.Framework::$views_extension;
   }
   
   
@@ -202,6 +203,7 @@ class Controller {
 		$this->controller_object->partials_path     = &$this->partials_path;
 		$this->controller_object->layouts_path      = &$this->layouts_path;
 		$this->controller_object->layouts_base_path = &$this->layouts_base_path;
+		$this->controller_object->page              = &$this->page;
 
     // save a reference to the controller
     Framework::$current_controller_object = &$this->controller_object;
