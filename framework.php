@@ -125,7 +125,7 @@ class Controller {
     $this->page = str_replace('..', '', trim($_SERVER['REQUEST_URI'],'/'));
     if($this->page == '') $this->page = 'home';
     
-    $this->view_file = $this->views_path.'/'.$this->page.'.'.Framework::$views_extension;
+    $this->view_file = APP_ROOT.'/_pages/'.$this->page.'.'.Framework::$views_extension;
 
   }
   
